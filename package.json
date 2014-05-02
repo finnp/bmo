@@ -12,6 +12,7 @@
   "author": "Finn Pauls",
   "license": "MIT",
   "dependencies": {
-    "send": "~0.3.0"
+    "send": "~0.3.0",
+    "commander": "~2.2.0"
   }
 }

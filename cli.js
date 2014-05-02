@@ -3,11 +3,21 @@
 var http = require('http');
 var fs = require('fs');
 var send = require('send');
+var program = require('commander');
+var version = require(__dirname + '/package.json').version;
 
-var port = 2600;
-var root = process.cwd();
+program
+  .version(version)
+  .option('-p, --port <n>', 'Port to serve [2600]', parseInt)
+  .option('-d, --dir [value]', 'Directory to serve [cwd]')
+  .parse(process.argv)
+  ;
+
+var port = program.port || 2600;
+var root = program.dir || process.cwd();
 
 var errorHandler = function(err) {
+  var res = this;
   res.statusCode = err.status || 500;
   var errorPath = root + '/' + res.statusCode + '.html';
   fs.createReadStream(errorPath)
@@ -19,7 +29,7 @@ var errorHandler = function(err) {
 var requestHandler = function(req, res){
   send(req, req.url)
     .from(root)
-    .on('error', error)
+    .on('error', errorHandler.bind(res))
     .pipe(res)
     ;
 }
