@@ -4,10 +4,14 @@
   "bin": {
     "bmo": "cli.js"
   },
-  "description": "BMO serves files",
+  "description": "BMO serves static files for you",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/finnp/bmo.git"
   },
   "author": "Finn Pauls",
   "license": "MIT",
