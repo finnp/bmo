@@ -2,7 +2,7 @@
 
 BMO helps you to serve static files. It's intended to help you with your local development of static websites. Just do `npm install -g bmo` and then run `bmo` in the folder you want to serve. Run `bmo -h` for more information.
 
-![BMO](bmo.gif)
+![BMO](img/bmo.gif)
 
 ## License (MIT)
 

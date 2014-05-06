@@ -18,6 +18,7 @@
   "dependencies": {
     "send": "~0.3.0",
     "commander": "~2.2.0",
-    "open": "0.0.5"
+    "open": "0.0.5",
+    "replacestream": "~0.1.3"
   }
 }

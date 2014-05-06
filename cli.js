@@ -6,6 +6,7 @@ var send = require('send');
 var program = require('commander');
 var open = require('open');
 var version = require(__dirname + '/package.json').version;
+var replace = require('replacestream')
 
 program
   .version(version)
@@ -19,11 +20,24 @@ var port = program.port || 2600;
 var root = program.root || process.cwd();
 
 var startServer = function(root, port) {
-  var errorHandler = function(res, err) {
+  var errorHandler = function(req, res, err) {
     res.statusCode = err.status || 500;
     var errorPath = root + '/' + res.statusCode + '.html';
     fs.createReadStream(errorPath)
-      .on('error', function() { res.end('Error ' + res.statusCode); })
+      .on('error', function() { 
+        if(req.url.slice(0,5) == '/_bmo') {
+          // Serve files used in error page
+          fs.createReadStream(__dirname + req.url.slice(5))
+            .pipe(res);
+        } else {
+          // Serve error page
+          fs.createReadStream(__dirname + '/error.html')
+            .pipe(replace('{{dir}}', res.path))
+            .pipe(replace('{{code}}', res.statusCode))
+            .pipe(res)
+            ;
+        }
+       })
       .pipe(res)
       ;
   };
@@ -31,7 +45,7 @@ var startServer = function(root, port) {
   var requestHandler = function(req, res){
   send(req, req.url)
     .from(root)
-    .on('error', errorHandler.bind(this, res))
+    .on('error', errorHandler.bind(this, req, res))
     .pipe(res)
     ;
   };
