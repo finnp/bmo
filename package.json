@@ -16,9 +16,9 @@
   "author": "Finn Pauls",
   "license": "MIT",
   "dependencies": {
-    "send": "~0.3.0",
-    "commander": "~2.2.0",
+    "send": "~0.13.2",
+    "commander": "~2.9.0",
     "open": "0.0.5",
-    "replacestream": "~0.1.3"
+    "replacestream": "~4.0.0"
   }
 }
